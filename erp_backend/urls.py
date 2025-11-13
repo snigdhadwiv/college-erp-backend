@@ -11,10 +11,11 @@ router.register(r'attendance', attendance_views.AttendanceViewSet)
 router.register(r'courses', course_views.CourseViewSet)
 router.register(r'subjects', course_views.SubjectViewSet)
 router.register(r'syllabus', course_views.SyllabusViewSet)  
-def home(_):
-    return HttpResponse("Backend is running. See /api/ and /admin/")
+
 urlpatterns = [
-    path("", home),
-    path("admin/", admin.site.urls),
-    path("api/", include("your_app.urls")),  # keep your existing include
+    path('admin/', admin.site.urls),
+    path('api/auth/', include('users.urls')),  
+    path('api/students/', include('students.urls')),
+    path('api/courses/', include('courses.urls')),
+    path('api/', include(router.urls)),
 ]
