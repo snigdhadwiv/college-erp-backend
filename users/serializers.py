@@ -8,7 +8,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'password_confirm', 'first_name', 'last_name', 'phone', 'role')
+        fields = ('email', 'username', 'password', 'password_confirm', 'first_name', 'last_name', 'role')
     
     def validate(self, attrs):
         if attrs['password'] != attrs['password_confirm']:
@@ -17,8 +17,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         validated_data.pop('password_confirm')
-        user = User.objects.create_user(**validated_data)
-        return user
+        return User.objects.create_user(**validated_data)
 
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -28,15 +27,13 @@ class UserLoginSerializer(serializers.Serializer):
         email = attrs.get('email')
         password = attrs.get('password')
         
-        if email and password:
-            user = authenticate(username=email, password=password)
-            if not user:
-                raise serializers.ValidationError('Invalid email or password')
-            attrs['user'] = user
-            return attrs
-        raise serializers.ValidationError('Email and password are required')
+        user = authenticate(username=email, password=password)
+        if not user:
+            raise serializers.ValidationError('Invalid email or password')
+        attrs['user'] = user
+        return attrs
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'first_name', 'last_name', 'role', 'phone')
+        fields = ('id', 'email', 'username', 'first_name', 'last_name', 'role')

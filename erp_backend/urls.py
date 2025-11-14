@@ -14,8 +14,6 @@ router.register(r'syllabus', course_views.SyllabusViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/auth/', include('users.urls')),  
-    path('api/students/', include('students.urls')),
-    path('api/courses/', include('courses.urls')),
-    path('api/', include(router.urls)),
+    path('api/auth/', include('users.urls')),  # Only auth for now
 ]
+

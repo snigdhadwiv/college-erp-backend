@@ -1,6 +1,8 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 
-@api_view(['GET'])
-def student_list(request):
-    return Response({'message': 'Students endpoint working'})
+from rest_framework import viewsets
+from .models import Student
+from .serializers import StudentSerializer
+
+class StudentViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
